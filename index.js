@@ -1,5 +1,5 @@
 const inquirer = require('inquirer');
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const cTable = require('console.table');
 const express = require('express');
 const path = require('path');
@@ -7,19 +7,43 @@ const path = require('path');
 const PORT = process.env.PORT || 3006;
 const app = express();
 
-// Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const db = mysql.createConnection(
   {
     host: 'localhost@127.0.0.1',
-    user: 'root',
-    password: 'testpassword',
+    user: 'Dan',
+    password: 'soitgoes',
     database: 'EMS'
   },
   console.log(`Connected to the EMS database.`)
 );
+
+
+app.get('/db', (req,res) => {
+  res.json(path.join(__dirname,'./db/EMS.session.sql'))
+  // res.sendFile(path.join(__dirname,'./db/EMS.session.sql'))
+})
+
+app.get('/dbtest', (req,res) => {
+      db.connect(function(err) {
+    if (err) throw err;
+    db.query("SELECT * FROM departments", function (err, result, fields) {
+      if (err) throw err;
+      console.log(result);
+    });
+  });
+})
+
+app.get('/test',(req,res) => {
+  res.json('./package.json')
+  res.sendFile(path.join(__dirname,'./package.json'))
+})
+
+app.get('/test2',(req,res) => {
+  res.sendFile(path.join(__dirname,'./package.json'))
+})
 
 function startMenu() {
     inquirer
@@ -94,4 +118,4 @@ app.get('/db', (req,res) => {
     console.log(`Server running on port http://localhost:${PORT}`);
   });
 
-startMenu()
+// startMenu()
