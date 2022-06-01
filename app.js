@@ -106,7 +106,7 @@ function viewDepartments() {
         console.log('DB connected')
         db.query("SELECT dep_name FROM department", function (err, result) {
             if (err) throw err;
-            console.log(result);
+            console.table(result);
             exitFunction()
           });   
     })  
@@ -120,7 +120,7 @@ function viewRoles() {
         console.log('DB connected')
         db.query("SELECT * FROM roles", function (err, result) {
             if (err) throw err;
-            console.log(result);
+            console.table(result);
             exitFunction();
           });
     })   
@@ -134,10 +134,36 @@ function viewEmployees(){
         console.log('DB connected')
         db.query("SELECT * FROM employee", function (err, result) {
             if (err) throw err;
-            console.log(result);
+            console.table(result);
             exitFunction();
           });
     })  
+}
+
+function addDepartment() {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'newDep',
+            message: 'Type new department name',
+          }
+    ]).then((response) => {
+        db.connect((err) => {
+            if(err){
+                throw err;
+            }
+            
+            db.query("INSERT INTO department SET ?",{
+                dep_name: response.newDep,
+            }, function (err){
+                throw err;
+            },
+            console.log('Department added')
+            )
+            exitFunction();
+        }) 
+    })
 }
 
 startMenu();
