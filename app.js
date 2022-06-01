@@ -166,4 +166,90 @@ function addDepartment() {
     })
 }
 
+function addRole() {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'newTitle',
+            message: 'Type new role name',
+          },
+          {
+            type: 'input',
+            name: 'newSalary',
+            message: 'Type new role salary',
+          },
+          {
+            type: 'input',
+            name: 'departmentid',
+            message: 'Type new role department ID',
+          },
+          
+    ]).then((response) => {
+        db.connect((err) => {
+            if(err){
+                throw err;
+            }
+            
+            db.query("INSERT INTO roles SET ?",{
+                title: response.newTitle,
+                salary: response.newSalary,
+                department_id: response.departmentid
+            }, function (err){
+                throw err;
+            },
+            console.log('Role added')
+            )
+            exitFunction();
+        }) 
+    })
+}
+
+function addEmployee() {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'fname',
+            message: 'First name',
+          },
+          {
+            type: 'input',
+            name: 'lname',
+            message: 'Last name',
+          },
+          {
+            type: 'input',
+            name: 'roleid',
+            message: 'Role ID',
+          },
+          {
+            type: 'input',
+            name: 'managerid',
+            message: 'Manager ID (optional)',
+          },
+          
+    ]).then((response) => {
+        db.connect((err) => {
+            if(err){
+                throw err;
+            }
+            
+            db.query("INSERT INTO employee SET ?",{
+                first_name: response.fname,
+                Last_name: response.lname,
+                role_id: response.roleid,
+                manager_id : response.managerid
+            }, function (err){
+                throw err;
+            },
+            console.log('Employee added')
+            )
+            exitFunction();
+        }) 
+    })
+}
+
+function updateEmployee(){};
+
 startMenu();
