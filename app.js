@@ -254,56 +254,123 @@ function updateEmployee(){
     inquirer
     .prompt([
         {
-            type: 'input',
-            name: 'oldRole',
-            message: 'ID to modify',
+            type: 'list',
+            name: 'update',
+            message: 'Which field would you like to update?',
+            choices: ['First name',
+                      'Last name',
+                      'Role',
+                      'Manager ID']
           },
-        {
-            type: 'input',
-            name: 'fname',
-            message: 'New first name',
-          },
-        //   {
-        //     type: 'input',
-        //     name: 'lname',
-        //     message: 'New lLast name',
-        //   },
-        //   {
-        //     type: 'input',
-        //     name: 'roleid',
-        //     message: 'New role ID',
-        //   },
-        //   {
-        //     type: 'input',
-        //     name: 'managerid',
-        //     message: 'New manager ID (optional)',
-        //   },
-          
     ]).then((response) => {
-    db.connect((err) => {
-        if(err){
-            throw err;
+
+        if(response.update == 'First name') {
+            inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'oldRole',
+                    message: 'ID to modify',
+                  },
+                {
+                    type: 'input',
+                    name: 'fname',
+                    message: 'New first name',
+                  },
+            ]).then((response) => {
+                db.connect((err) => {
+                    if(err){
+                        throw err;
+                    }
+            
+                    let updateValues = `UPDATE employee
+                           SET first_name = ?
+                           WHERE id = ?`;
+            
+                    let newData  = [`${response.fname}`,`${response.oldRole}`]
+            
+                    db.query(updateValues,newData,(err, results) => {
+                        if (err){
+                            throw err;
+                          }
+                          console.log('Rows affected:', results.affectedRows);
+                    })
+                })
+            })
+        }
+    
+        if(response.update == 'Last name') {
+            inquirer
+            .prompt([
+                {
+                    type: 'input',
+                    name: 'oldRole',
+                    message: 'ID to modify',
+                  },
+                {
+                    type: 'input',
+                    name: 'lname',
+                    message: 'New last name',
+                  },
+            ]).then((response) => {
+                db.connect((err) => {
+                    if(err){
+                        throw err;
+                    }
+            
+                    let updateValues = `UPDATE employee
+                           SET last_name = ?
+                           WHERE id = ?`;
+            
+                    let newData  = [`${response.lname}`,`${response.oldRole}`]
+            
+                    db.query(updateValues,newData,(err, results) => {
+                        if (err){
+                            throw err;
+                          }
+                          console.log('Rows affected:', results.affectedRows);
+                    })
+                })
+            })
         }
 
-        let updateValues = `UPDATE employee
-               SET first_name = ?
-               WHERE id = ?`;
-
-        let newData  = [`${response.fname}`,`${response.oldRole}`]
-
-            //    SET last_name = ${response.lname}
-            //    SET role_id = ${response.roleid}
-            //    SET manager_id = ${response.managerid}
-            //    WHERE id = ${response.oldRole}`;
-
-        db.query(updateValues,newData,(err, results) => {
-            if (err){
-                throw err;
-              }
-              console.log('Rows affected:', results.affectedRows);
-        })
-    })
+        // if(response.update == 'Manager ID') {
+        //     inquirer
+        //     .prompt([
+        //         {
+        //             type: 'input',
+        //             name: 'oldRole',
+        //             message: 'ID to modify',
+        //           },
+        //         {
+        //             type: 'input',
+        //             name: 'manager_id',
+        //             message: 'New manager ID',
+        //           },
+        //     ]).then((response) => {
+        //         db.connect((err) => {
+        //             if(err){
+        //                 throw err;
+        //             }
+            
+        //             let updateValues = `UPDATE employee
+        //                    SET manager_id = ?
+        //                    WHERE id = ?`;
+            
+        //             let newData  = [`${response.manager_id}`,`${response.oldRole}`]
+            
+        //             db.query(updateValues,newData,(err, results) => {
+        //                 if (err){
+        //                     throw err;
+        //                   }
+        //                   console.log('Rows affected:', results.affectedRows);
+        //             })
+        //         })
+        //     })
+        // }
   })
 };
 
 startMenu();
+
+ 
