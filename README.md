@@ -166,9 +166,9 @@ Fulfilling any of the following can add up to 20 points to your grade. Note that
 
 You are required to submit BOTH of the following for review:
 
-* A walkthrough video demonstrating the functionality of the application.
+* A walkthrough video demonstrating the functionality of the application: https://drive.google.com/file/d/1oTutieI9jSNpXCvUXNseaggmZfkrbSbJ/view?usp=sharing 
 
-* The URL of the GitHub repository, with a unique name and a README describing the project.
+* The URL of the GitHub repository, with a unique name and a README describing the project: https://github.com/DanOlmedo/Employee_management_system
 
 - - -
 © 2022 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.

@@ -160,6 +160,7 @@ function addDepartment() {
                 throw err;
             },
             console.log('Department added')
+            
             )
             exitFunction();
         }) 
@@ -188,6 +189,7 @@ function addRole() {
     ]).then((response) => {
         db.query(`INSERT INTO roles (department_id, title, salary) VALUES (${response.departmentid},'${response.newTitle}',${response.newSalary})`);
     })
+  
 }
 
 function addEmployee() {
@@ -216,8 +218,8 @@ function addEmployee() {
           
     ]).then((response) => {
         db.query(`INSERT INTO employee (first_name, Last_name, role_id, manager_id) VALUES ('${response.fname}','${response.lname}',${response.roleid},${response.managerid})`);
-
     })
+  
 }
 
 function updateEmployee(){
@@ -264,6 +266,7 @@ function updateEmployee(){
                             throw err;
                           }
                           console.log('Rows affected:', results.affectedRows);
+                          exitFunction();
                     })
                 })
             })
@@ -299,45 +302,12 @@ function updateEmployee(){
                             throw err;
                           }
                           console.log('Rows affected:', results.affectedRows);
+                          exitFunction();
                     })
                 })
             })
         }
 
-        // if(response.update == 'Manager ID') {
-        //     inquirer
-        //     .prompt([
-        //         {
-        //             type: 'input',
-        //             name: 'oldRole',
-        //             message: 'ID to modify',
-        //           },
-        //         {
-        //             type: 'input',
-        //             name: 'manager_id',
-        //             message: 'New manager ID',
-        //           },
-        //     ]).then((response) => {
-        //         db.connect((err) => {
-        //             if(err){
-        //                 throw err;
-        //             }
-            
-        //             let updateValues = `UPDATE employee
-        //                    SET manager_id = ?
-        //                    WHERE id = ?`;
-            
-        //             let newData  = [`${response.manager_id}`,`${response.oldRole}`]
-            
-        //             db.query(updateValues,newData,(err, results) => {
-        //                 if (err){
-        //                     throw err;
-        //                   }
-        //                   console.log('Rows affected:', results.affectedRows);
-        //             })
-        //         })
-        //     })
-        // }
   })
 };
 
