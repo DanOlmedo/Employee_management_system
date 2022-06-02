@@ -6,7 +6,7 @@ const db = mysql.createConnection({
     host : 'localhost',
     user : 'root',
     password : 'password',
-    database : 'Employee_management_system'
+    database : 'employee_management_system'
 
 });
 
@@ -186,22 +186,7 @@ function addRole() {
           },
           
     ]).then((response) => {
-        db.connect((err) => {
-            if(err){
-                throw err;
-            }
-            
-            db.query("INSERT INTO roles SET ?",{
-                title: response.newTitle,
-                salary: response.newSalary,
-                department_id: response.departmentid
-            }, function (err){
-                throw err;
-            },
-            console.log('Role added')
-            )
-            exitFunction();
-        }) 
+        db.query(`INSERT INTO roles (department_id, title, salary) VALUES (${response.departmentid},'${response.newTitle}',${response.newSalary})`);
     })
 }
 
@@ -230,23 +215,8 @@ function addEmployee() {
           },
           
     ]).then((response) => {
-        db.connect((err) => {
-            if(err){
-                throw err;
-            }
-            
-            db.query("INSERT INTO employee SET ?",{
-                first_name: response.fname,
-                Last_name: response.lname,
-                role_id: response.roleid,
-                manager_id : response.managerid
-            }, function (err){
-                throw err;
-            },
-            console.log('Employee added')
-            )
-            exitFunction();
-        }) 
+        db.query(`INSERT INTO employee (first_name, Last_name, role_id, manager_id) VALUES ('${response.fname}','${response.lname}',${response.roleid},${response.managerid})`);
+
     })
 }
 
