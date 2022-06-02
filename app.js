@@ -250,6 +250,60 @@ function addEmployee() {
     })
 }
 
-function updateEmployee(){};
+function updateEmployee(){
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'oldRole',
+            message: 'ID to modify',
+          },
+        {
+            type: 'input',
+            name: 'fname',
+            message: 'New first name',
+          },
+        //   {
+        //     type: 'input',
+        //     name: 'lname',
+        //     message: 'New lLast name',
+        //   },
+        //   {
+        //     type: 'input',
+        //     name: 'roleid',
+        //     message: 'New role ID',
+        //   },
+        //   {
+        //     type: 'input',
+        //     name: 'managerid',
+        //     message: 'New manager ID (optional)',
+        //   },
+          
+    ]).then((response) => {
+    db.connect((err) => {
+        if(err){
+            throw err;
+        }
+
+        let updateValues = `UPDATE employee
+               SET first_name = ?
+               WHERE id = ?`;
+
+        let newData  = [`${response.fname}`,`${response.oldRole}`]
+
+            //    SET last_name = ${response.lname}
+            //    SET role_id = ${response.roleid}
+            //    SET manager_id = ${response.managerid}
+            //    WHERE id = ${response.oldRole}`;
+
+        db.query(updateValues,newData,(err, results) => {
+            if (err){
+                throw err;
+              }
+              console.log('Rows affected:', results.affectedRows);
+        })
+    })
+  })
+};
 
 startMenu();
